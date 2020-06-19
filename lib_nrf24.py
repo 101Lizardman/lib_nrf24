@@ -11,6 +11,10 @@
 # Brian Lavery Oct 2014
 
 
+# I have had to fork this just to add a tiny change so that it will function
+# correctly on my RaspPi B+
+# Shane Vincent, June 2020
+
 
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -371,7 +375,8 @@ class NRF24:
         # CE optional (at least in some circumstances, eg fixed PTX PRX roles, no powerdown)
         # CE seems to hold itself as (sufficiently) HIGH, but tie HIGH is safer!
         self.spidev.open(0, csn_pin)
-        self.ce_pin = ce_pin
+        self.spidev.max_speed_hz = 4000000
+	self.ce_pin = ce_pin
 
         if ce_pin:
             self.GPIO.setup(self.ce_pin, self.GPIO.OUT)
